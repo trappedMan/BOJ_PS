@@ -3,7 +3,8 @@
 using namespace std;
 bool grid[10][10];
 bool tmp[10][10];
-int ans = -1, tempans = 0;
+const int INF= 1e9;
+int ans = INF, tempans = 0;
 pair<int, int> dir[4] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 bool valid(int y, int x)
 {
@@ -54,8 +55,11 @@ int main()
             if (tmp[9][j])
                 flag = false;
         if (flag)
-            ans = max(ans, tempans);
+            ans = min(ans, tempans);
     }
+    if (ans == INF)
+        cout << "-1";
+    else
     cout << ans << '\n';
     return 0;
 }

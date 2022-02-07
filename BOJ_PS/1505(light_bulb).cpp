@@ -3,11 +3,12 @@
 using namespace std;
 bool grid[8][8];
 bool tmp[8][8];
-int ans = -1, tempans = 0, n, m;
-pair<int, int> dir[4] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+const int INF = 1e9;
+int ans = INF, tempans = 0, n, m;
+pair<int, int> dir[8] = { {1, 0}, {1,1}, {0, 1}, {-1,1}, {-1, 0}, {-1,-1}, {0, -1}, {1,-1} };
 bool valid(int y, int x)
 {
-    return 0 <= y && y < 10 && 0 <= x && x < 10;
+    return 0 <= y && y < n && 0 <= x && x < m;
 }
 void tgl(int y, int x)
 {
@@ -38,33 +39,34 @@ int main()
                 grid[i][j] = false;
         }
     }
-    for (int bm = pow(2, n + m - 1) - 1; bm >= 0; bm--)
+    for (int bm = (1<<n+m-1) - 1; bm >= 0; bm--)
     {
         memcpy(tmp, grid, sizeof(tmp));
         tempans = 0;
         for (k = 0; k < n; k++)
             if (((bm >> k) & 1))
-                tgl(0, k);
+                tgl(k, 0);
         for (k = n; k < n + m - 1; k++)
         {
             if (((bm >> k) & 1))
-                tgl(k - n + 1, 0);
+                tgl(0, k - n + 1);
         }
         for (int i = 1; i < n; i++)
             for (int j = 1; j < m; j++)
-                if (tmp[i - 1][j - 1])
+                if (!tmp[i - 1][j - 1])
                     tgl(i, j);
 
         bool flag = true;
         for (int i = 0; i < n; i++)
-            if (tmp[i][m - 1])
-                flag = false;
-        for (int j = 0; j < m; j++)
-            if (tmp[n - 1][j])
-                flag = false;
+            for (int j = 0; j < m; j++)
+                if (!tmp[i][j])
+                    flag = false;
         if (flag)
-            ans = max(ans, tempans);
+            ans = min(ans, tempans);
     }
-    cout << ans << '\n';
+    if (ans == INF)
+        cout << "-1";
+    else
+        cout << ans << '\n';
     return 0;
 }

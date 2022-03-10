@@ -22,6 +22,8 @@ int main() {
 	}
 
 	avg = sum / (double)N;
+	if (avg > -1 && avg < 0)
+		avg = 0;
 	sort(val, val + N);
 	median = val[N / 2];
 	for (int i = 0; i <= 8000; i++) {

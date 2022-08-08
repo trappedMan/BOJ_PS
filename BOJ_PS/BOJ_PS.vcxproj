@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="1395.cpp" />
     <ClCompile Include="a.cpp" />
     <ClCompile Include="b.cpp" />
     <ClCompile Include="temp.cpp" />
